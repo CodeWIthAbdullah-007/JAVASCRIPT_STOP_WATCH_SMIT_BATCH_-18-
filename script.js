@@ -10,45 +10,51 @@ var hoursEl = document.getElementById("hours");
 
 var interval;
 
-function start() {
-    interval = setInterval(function () {
-        mili++;
-        if(mili < 10) miliSecond.innerHTML = "0" + mili;
-        else miliSecond.innerHTML = mili;
+function start(){
+    if(interval) return;
 
-        if (mili >= 100) {
+    interval = setInterval(function(){
+        mili++;
+        miliSecond.innerHTML = mili < 10 ? "0" + mili : mili;
+
+        if(mili >= 100){
             second++;
-            if(second < 10) secondsEl.innerHTML = "0" + second;
-            else secondsEl.innerHTML = second;
+            secondsEl.innerHTML = second < 10 ? "0" + second : second;
             mili = 0;
         }
 
-        if (second >= 60) {
+        if(second >= 60){
             minute++;
-            if(minute < 10) minutesEl.innerHTML = "0" + minute;
-            else minutesEl.innerHTML = minute;
+            minutesEl.innerHTML = minute < 10 ? "0" + minute : minute;
             second = 0;
         }
 
-        if (minute >= 60) {
+        if(minute >= 60){
             hour++;
-            if(hour < 10) hoursEl.innerHTML = "0" + hour;
-            else hoursEl.innerHTML = hour;
+            hoursEl.innerHTML = hour < 10 ? "0" + hour : hour;
             minute = 0;
         }
-
-    }, 10);
+    },10);
 }
 
-function stop() {
+function stop(){
     clearInterval(interval);
+    interval = null;
 }
 
-function reset() {
-    clearInterval(interval);
-    mili = 0; second = 0; minute = 0; hour = 0;
+function reset(){
+    stop();
+    mili = second = minute = hour = 0;
     miliSecond.innerHTML = "00";
     secondsEl.innerHTML = "00";
     minutesEl.innerHTML = "00";
     hoursEl.innerHTML = "00";
+}
+
+function darkMode(){
+    document.body.classList.add("dark");
+}
+
+function lightMode(){
+    document.body.classList.remove("dark");
 }
